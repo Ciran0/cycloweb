@@ -1,0 +1,41 @@
+<!-- main/templates/main/model_dashboard.html -->
+{% extends 'main/base.html' %}
+{% block content %}
+    <h2>{{ rob_model.name }}</h2>
+    <p>{{ rob_model.description }}</p>
+    <div class="row">
+        <!-- Generate -->
+        <div class="col-md-4" id="generate-div">
+            <!-- We can directly include the partial so it shows on first load -->
+            {% include 'main/partial_generate_div.html' with rob_model=rob_model param_list=param_list %}
+        </div>
+        <!-- Loading indicator (hidden by default) -->
+        <div id="generate-loading-indicator" style="display:none;">
+            <div class="text-center mt-2 mb-2">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p>Loading…</p>
+            </div>
+        </div>
+        <!-- List -->
+        <div class="col-md-4" id="list-div">
+            <div class="card">
+                <div class="card-body">
+                    <h4>List</h4>
+                    {% include 'main/partial_list_runs.html' with runs=runs rob_model=rob_model %}
+                </div>
+            </div>
+        </div>
+        <!-- Graph -->
+        <!-- main/templates/main/model_dashboard.html -->
+        <div class="col-md-4" id="graph-div">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Graph</h4>
+                    {% include 'main/partial_graph_div.html' with rob_model=rob_model %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

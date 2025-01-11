@@ -1,0 +1,63 @@
+<!-- partial_navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">Cycloweb</a>
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarContent"
+                aria-controls="navbarContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!-- Home link -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                </li>
+                <!-- RobModel dropdown (only show if user is authenticated and has RobModels) -->
+                {% if user.is_authenticated and robmodels %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="robmodelDropdown"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">Models</a>
+                        <ul class="dropdown-menu" aria-labelledby="robmodelDropdown">
+                            {% for rm in robmodels %}
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'model_dashboard' rm.id %}">{{ rm.name }}</a>
+                                </li>
+                            {% empty %}
+                                <li>
+                                    <span class="dropdown-item-text">No accessible models</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
+            <!-- Right side items: Dashboard / Login / Logout -->
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           data-bs-toggle="modal"
+                           data-bs-target="#logoutModal"
+                           href="#">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           data-bs-toggle="modal"
+                           data-bs-target="#loginModal"
+                           href="#">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

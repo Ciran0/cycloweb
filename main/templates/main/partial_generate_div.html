@@ -1,0 +1,80 @@
+<!-- main/templates/main/partial_generate_div.html -->
+<div class="card">
+    <div class="card-body" id="generate-div-content">
+        <!-- If 'task_id' is present, we know a Celery job was started -->
+        {% if task_id %}
+            <div class="alert alert-info"
+                 id="check-status-section"
+                 hx-get="{% url 'check_task_status' task_id=task_id %}"
+                 hx-trigger="load, every 1ms"
+                 hx-target="#check-status-section"
+                 hx-swap="outerHTML">Checking simulation status...</div>
+        {% endif %}
+        <h4>Generate</h4>
+        <form hx-post="{% url 'simulate_run' rob_model.id %}"
+              hx-target="#generate-div"
+              hx-swap="innerHTML"
+              hx-indicator="#generate-loading-indicator">
+            {% csrf_token %}
+            <!-- "Run Name" and "Run Number" from your previous requirement -->
+            <div class="mb-3">
+                <label for="id_run_name" class="form-label">Run Name</label>
+                <input class="form-control"
+                       type="text"
+                       name="run_name"
+                       id="id_run_name"
+                       required>
+            </div>
+            <!-- Now loop over param_list from the model's JSON -->
+            {% for param in param_list %}
+                {% comment %}
+                  param = {
+                    "name": "frame_mass",
+                    "type": "float",
+                    "min": 1.0,
+                    "max": 500.0,
+                    "default": 85.0,
+                    "units": "kg",
+                    "label": "Mass of the cycle frame",
+                    "description": "This is the mass...",
+                    "keys_to_rob_conf": [...]
+                    "values": ... (only if type is int with discrete values)
+                  }
+                {% endcomment %}
+                <div class="mb-3">
+                    <label for="id_{{ param.name }}" class="form-label">{{ param.label }}</label>
+                    <!-- If param has a "values" array, we might use a dropdown -->
+                    {% if param.options %}
+                        <select class="form-select" name="{{ param.name }}" id="id_{{ param.name }}">
+                            {% for val in param.options %}
+                                <option value="{{ val }}" {% if val == param.default %}selected{% endif %}>{{ val }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        <!-- Otherwise use a number input if type= int/float -->
+                        {% if param.type == "float" or param.type == "int" %}
+                            <input class="form-control"
+                                   type="number"
+                                   name="{{ param.name }}"
+                                   id="id_{{ param.name }}"
+                                   step="any"
+                                   min="{{ param.min|default_if_none:'1' }}"
+                                   max="{{ param.max|default_if_none:'999999' }}"
+                                   value="{{ param.default|default_if_none:'0' }}">
+                        {% else %}
+                            <!-- fallback for param type = "string"? -->
+                            <input class="form-control"
+                                   type="text"
+                                   name="{{ param.name }}"
+                                   id="id_{{ param.name }}"
+                                   value="{{ param.default|default_if_none:'' }}">
+                        {% endif %}
+                    {% endif %}
+                    <!-- Optional description -->
+                    {% if param.description %}<small class="text-muted d-block mt-1">{{ param.description }}</small>{% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Run Simulation</button>
+        </form>
+    </div>
+</div>

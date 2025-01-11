@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h5 class="modal-title">Delete {{ run_name }}?</h5>
+    <button type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <p>
+        Are you sure you want to delete the run <strong>{{ run_name }}</strong>?
+    </p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+    <!-- We can submit a form or do an hx-post to actually delete -->
+    <form method="POST"
+          action="{% url 'delete_run' model_id run_name %}"
+          hx-post="{% url 'delete_run' model_id run_name %}"
+          hx-target="#list-div"
+          hx-swap="innerHTML">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+</div>

@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h5 class="modal-title">Confirm Logout</h5>
+    <button type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <p>Are you sure you want to logout?</p>
+    <form method="POST"
+          action="{% url 'logout' %}"
+          hx-post="{% url 'logout' %}"
+          hx-target="body"
+          hx-swap="innerHTML">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+</div>

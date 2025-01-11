@@ -1,0 +1,74 @@
+<!-- main/templates/main/partial_graph_div.html -->
+{% load static %}
+<div id="graph-controls">
+    <!-- We'll parse rob_model.graph_config as JSON in the view or inline in JS -->
+    <label for="graph_select" class="form-label">Choose a graph:</label>
+    <select id="graph_select" class="form-select mb-2">
+        <option value="">-- Select a graph --</option>
+        {% for graph_def in graph_config_list %}
+            <option value="{{ graph_def.name }}">{{ graph_def.label }}</option>
+        {% endfor %}
+    </select>
+    <button id="drawGraphBtn" class="btn btn-primary">Draw Graph</button>
+</div>
+<!-- This is where the actual Plotly graph will appear -->
+<div id="graph-output" class="mt-3">
+    <!-- Graph or error messages get injected here -->
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('drawGraphBtn');
+  btn.addEventListener('click', function(){
+    // 1) Gather selected runs
+    const runCheckboxes = document.querySelectorAll('.run-checkbox:checked');
+    const runs = Array.from(runCheckboxes).map(c => c.value);
+    
+    // 2) Gather selected graph
+    const graphSelect = document.getElementById('graph_select');
+    const graphName = graphSelect.value;
+
+    if (!graphName) {
+      alert("Please select a graph type.");
+      return;
+    }
+    if (runs.length === 0) {
+      alert("Please select at least one run.");
+      return;
+    }
+
+    // Build POST data
+    const formData = new FormData();
+    formData.append('graph_name', graphName);
+    runs.forEach(r => formData.append('runs[]', r));
+
+    // Add CSRF token if needed (Django)
+    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+    // 3) Send POST to draw_graph
+    fetch("{% url 'draw_graph' rob_model.id %}", {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      return response.json();  // parse the JSON
+    })
+    .then(data => {
+      if (data.error) {
+        // If the server returned an error message in JSON
+        document.getElementById('graph-output').innerHTML = 
+          `<div class="alert alert-danger">${data.error}</div>`;
+        return;
+      }
+      // 4) We have { data: [...], layout: {...} }
+      Plotly.newPlot("graph-output", data.data, data.layout, {});
+    })
+    .catch(err => {
+      document.getElementById('graph-output').innerHTML = 
+        `<div class="alert alert-danger">Error: ${err.message}</div>`;
+    });
+  });
+});
+</script>

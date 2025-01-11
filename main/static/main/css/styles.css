@@ -1,0 +1,36 @@
+/* styles.css */
+body {
+	min-height: 100vh;
+	position: relative;
+	margin: 0;
+	padding-bottom: 100px;
+	box-sizing: border-box;
+	background: #256BA5;
+
+}
+
+.navbar {
+	background: white;
+}
+
+.navbar-brand {
+	color: #256BA5;
+}
+
+footer {
+	background: white;
+	position: absolute;
+	bottom: 0;
+	width: 100vw;
+}
+
+.htmx-request {
+	display: block !important;
+	/* or something so the spinner shows up */
+}
+
+#generate-div.htmx-request {
+	opacity: 0.5;
+	pointer-events: none;
+	/* prevents clicks in the form */
+}

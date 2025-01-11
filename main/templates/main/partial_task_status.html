@@ -1,0 +1,18 @@
+<!-- main/templates/main/partial_task_status.html -->
+{% if status == 'SUCCESS' %}
+    <div class="alert alert-success">Simulation finished successfully!</div>
+    <script>
+  // Trigger an HTMX request to refresh the runs list
+  htmx.ajax('GET', '{% url "refresh_runs" rob_model.id %}', {
+    target: '#list-div',
+    swap: 'innerHTML'
+  });
+    </script>
+{% elif status == 'FAILURE' %}
+    <div class="alert alert-danger">Simulation failed!</div>
+{% elif status == 'PENDING' or status == 'STARTED' %}
+    <div hx-get="{% url 'check_task_status' task_id=task_id %}"
+         hx-trigger="load, every 1ms"
+         hx-swap="outerHTML"
+         class="alert alert-info">Simulation is {{ status|lower }}...</div>
+{% endif %}

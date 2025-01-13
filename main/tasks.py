@@ -1,4 +1,10 @@
-# main/tasks.py
+"""
+Contains Celery tasks for the 'main' app.
+
+Defines asynchronous jobs that handle running binaries
+and capturing outputs without blocking the main Django process.
+"""
+
 import os
 import subprocess
 from celery import shared_task
@@ -6,26 +12,28 @@ from celery import shared_task
 @shared_task
 def run_binary_task(binary_path, conf_path, run_folder):
     """
-    Launch the binary with two arguments:
-      1. the .conf file path
-      2. the directory where results must be written
-    Then capture stdout/stderr into a .log file in the run_folder.
+    Launches the given binary with two arguments:
+      1) The .conf file path
+      2) The directory where results must be written.
+
+    Captures stdout/stderr, writes them to a .log file in run_folder,
+    and returns a status dict.
     """
     try:
-        # 1) Create a "result" subfolder
+        # 1) Create a "result" subfolder for binary outputs
         result_dir = os.path.join(run_folder, "result")
         os.makedirs(result_dir, exist_ok=True)
 
-        # 2) Run the binary, passing conf_path & result_dir
+        # 2) Run the binary with subprocess
         completed_proc = subprocess.run(
             [binary_path, conf_path, result_dir],
-            capture_output=True,  # capture stdout and stderr
-            text=True,            # decode stdout/stderr as text
-            check=True,            # raise CalledProcessError if exit code != 0
-            cwd=os.path.dirname(binary_path)
+            capture_output=True,  # captures stdout/stderr
+            text=True,
+            check=True,           # raises CalledProcessError if exit code != 0
+            cwd=os.path.dirname(binary_path)  # ensures we run in the binary's directory
         )
 
-        # 3) Save stdout and stderr to a .log file in run_folder
+        # 3) Write stdout/stderr to a run.log file
         log_path = os.path.join(run_folder, "run.log")
         with open(log_path, "w", encoding="utf-8") as log_file:
             log_file.write("STDOUT:\n")
@@ -40,7 +48,7 @@ def run_binary_task(binary_path, conf_path, run_folder):
         }
 
     except subprocess.CalledProcessError as e:
-        # If the binary fails (non-zero exit code)
+        # Non-zero exit code from the binary
         log_path = os.path.join(run_folder, "run.log")
         with open(log_path, "w", encoding="utf-8") as log_file:
             log_file.write("STDOUT:\n")
@@ -54,7 +62,7 @@ def run_binary_task(binary_path, conf_path, run_folder):
             "stderr": e.stderr
         }
     except Exception as e:
-        # Any other error (permissions, path not found, etc.)
+        # Any other error (permissions, missing file, etc.)
         log_path = os.path.join(run_folder, "run.log")
         with open(log_path, "w", encoding="utf-8") as log_file:
             log_file.write(f"Exception: {str(e)}\n")

@@ -1,4 +1,7 @@
 <!-- main/templates/main/partial_generate_div.html -->
+<!-- 
+    The form for generating a simulation run + handling Celery task creation
+-->
 <div class="card">
     <div class="card-body" id="generate-div-content">
         <!-- If 'task_id' is present, we know a Celery job was started -->
@@ -6,7 +9,7 @@
             <div class="alert alert-info"
                  id="check-status-section"
                  hx-get="{% url 'check_task_status' task_id=task_id %}"
-                 hx-trigger="load, every 1ms"
+                 hx-trigger="load, every 1s"
                  hx-target="#check-status-section"
                  hx-swap="outerHTML">Checking simulation status...</div>
         {% endif %}

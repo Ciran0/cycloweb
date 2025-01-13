@@ -34,3 +34,31 @@ footer {
 	pointer-events: none;
 	/* prevents clicks in the form */
 }
+/* === DASHBOARD LAYOUT === */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-areas:
+    /* on narrow screens, stack them all vertically */
+    "generate"
+    "list"
+    "graph";
+  grid-gap: 1rem; /* space between items */
+}
+
+/* Larger screens (e.g., min-width: 992px or 768px depending on preference) */
+@media (min-width: 992px) {
+  .dashboard-grid {
+    /* We define a 2x2 arrangement, but we only need 3 areas. */
+    grid-template-areas:
+      "generate list"
+      "generate graph";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+}
+
+/* Named areas for each div */
+.dashboard-generate { grid-area: generate; }
+.dashboard-list { grid-area: list; }
+.dashboard-graph { grid-area: graph; }

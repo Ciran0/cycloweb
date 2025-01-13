@@ -1,0 +1,55 @@
+[2025-01-12 19:48:20,640: WARNING/MainProcess] /home/developer/cycloweb_dev/cycloweb/venv_dev/lib/python3.11/site-packages/celery/worker/consumer/consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2025-01-12 19:48:20,679: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2025-01-12 19:48:20,681: WARNING/MainProcess] /home/developer/cycloweb_dev/cycloweb/venv_dev/lib/python3.11/site-packages/celery/worker/consumer/consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2025-01-12 19:48:20,688: INFO/MainProcess] mingle: searching for neighbors
+[2025-01-12 19:48:21,707: INFO/MainProcess] mingle: all alone
+[2025-01-12 19:48:21,726: INFO/MainProcess] celery@vps-26a08a34 ready.
+[2025-01-12 19:48:21,727: INFO/MainProcess] Task main.tasks.run_binary_task[2be80f29-b152-4806-8703-3bc7d64ea8d5] received
+[2025-01-12 19:48:21,857: INFO/ForkPoolWorker-1] Task main.tasks.run_binary_task[2be80f29-b152-4806-8703-3bc7d64ea8d5] succeeded in 0.027084561064839363s: {'status': 'error', 'stdout': 'Starting DutchBike project!
+Loading the DutchBike data file !
+>> LOAD>> Invalid configuration file provided:
+       >> 	/home/developer/cycloweb_dev/cycloweb/run_data/2/1/isCeleryWorking/sim.conf
+MBS-ERROR: CONFIGURATION FILE NOT LOCATED.
+
+Stopping the process. 
+', 'stderr': ''}
+[2025-01-12 19:48:56,735: INFO/MainProcess] Task main.tasks.run_binary_task[92dd9769-0139-42e7-99ca-06437444a951] received
+[2025-01-12 19:49:02,059: INFO/ForkPoolWorker-1] Task main.tasks.run_binary_task[92dd9769-0139-42e7-99ca-06437444a951] succeeded in 5.322112220805138s: {'status': 'success', 'stdout': 'Starting DutchBike project!
+Loading the DutchBike data file !
+*.mbs file loaded!
+
+>>DIRDYN>> Starting direct dynamics module.
+        >> Integrator : 	 RK4 
+
+>>DIRDYN>> Direct dynamics analysis finished.
+', 'stderr': ''}
+[2025-01-12 19:57:37,943: INFO/MainProcess] Task main.tasks.run_binary_task[2470eab7-2ac0-489f-86a9-f5392ea3e270] received
+[2025-01-12 19:57:42,645: INFO/ForkPoolWorker-1] Task main.tasks.run_binary_task[2470eab7-2ac0-489f-86a9-f5392ea3e270] succeeded in 4.70076559484005s: {'status': 'success', 'stdout': 'Starting DutchBike project!
+Loading the DutchBike data file !
+*.mbs file loaded!
+
+>>DIRDYN>> Starting direct dynamics module.
+        >> Integrator : 	 RK4 
+
+>>DIRDYN>> Direct dynamics analysis finished.
+', 'stderr': ''}
+[2025-01-12 20:32:21,660: INFO/MainProcess] Task main.tasks.run_binary_task[db0b98f6-7a54-4194-9648-0478a0d58a92] received
+[2025-01-12 20:32:26,566: INFO/ForkPoolWorker-1] Task main.tasks.run_binary_task[db0b98f6-7a54-4194-9648-0478a0d58a92] succeeded in 4.904029245022684s: {'status': 'success', 'stdout': 'Starting DutchBike project!
+Loading the DutchBike data file !
+*.mbs file loaded!
+
+>>DIRDYN>> Starting direct dynamics module.
+        >> Integrator : 	 RK4 
+
+>>DIRDYN>> Direct dynamics analysis finished.
+', 'stderr': ''}

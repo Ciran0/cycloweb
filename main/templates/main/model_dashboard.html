@@ -1,15 +1,17 @@
 <!-- main/templates/main/model_dashboard.html -->
 {% extends 'main/base.html' %}
+
 {% block content %}
     <h2>{{ rob_model.name }}</h2>
     <p>{{ rob_model.description }}</p>
-    <div class="row">
-        <!-- Generate -->
-        <div class="col-md-4" id="generate-div">
-            <!-- We can directly include the partial so it shows on first load -->
+
+    <div class="dashboard-grid">
+        <!-- Generate Section -->
+        <div class="dashboard-generate" id="generate-div">
             {% include 'main/partial_generate_div.html' with rob_model=rob_model param_list=param_list %}
         </div>
-        <!-- Loading indicator (hidden by default) -->
+
+        <!-- Hidden loading indicator for HTMX requests -->
         <div id="generate-loading-indicator" style="display:none;">
             <div class="text-center mt-2 mb-2">
                 <div class="spinner-border text-primary" role="status">
@@ -18,8 +20,9 @@
                 <p>Loading…</p>
             </div>
         </div>
-        <!-- List -->
-        <div class="col-md-4" id="list-div">
+
+        <!-- List Section -->
+        <div class="dashboard-list" id="list-div">
             <div class="card">
                 <div class="card-body">
                     <h4>List</h4>
@@ -27,9 +30,9 @@
                 </div>
             </div>
         </div>
-        <!-- Graph -->
-        <!-- main/templates/main/model_dashboard.html -->
-        <div class="col-md-4" id="graph-div">
+
+        <!-- Graph Section -->
+        <div class="dashboard-graph" id="graph-div">
             <div class="card">
                 <div class="card-body">
                     <h4>Graph</h4>
@@ -39,3 +42,4 @@
         </div>
     </div>
 {% endblock content %}
+

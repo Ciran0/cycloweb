@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-i65mvr%6e#l4y8!d!&d%ml)h%+0bbe19h$^xp2$(da9#g7fdt^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = ['localhost','127.0.0.1','57.129.132.77']
 
 # Application definition
 
@@ -130,5 +130,4 @@ CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'  # or wherever your Ra
 CELERY_RESULT_BACKEND = 'rpc://'  # or 'amqp://' or another backend
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:8000','http://127.0.0.1:8000']
-ALLOWED_HOSTS = ['localhost','127.0.0.1']
 CORS_ORIGIN_WHITELIST = ['http://localhost:8000','http://127.0.0.1:8000']

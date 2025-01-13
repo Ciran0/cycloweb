@@ -4,3 +4,4 @@ celery_worker.log
 celery-worker.pid
 *db.sqlite3
 run_data/
+db.sqlite3

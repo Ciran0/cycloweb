@@ -17,7 +17,6 @@ A Django-based web application that lets users run simulations (via binaries), g
 11. [Graphs & Plotly Integration](#graphs--plotly-integration)  
 12. [Editable Site Settings](#editable-site-settings)  
 13. [Deployment Guidelines](#deployment-guidelines)  
-14. [License](#license)
 
 ---
 

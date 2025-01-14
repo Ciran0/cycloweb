@@ -1,3 +1,0 @@
-/home/cirano/Quandyga/dutchbike/workR/install/./libProject_user.so
-/home/cirano/Quandyga/dutchbike/workR/install/./libProject_symbolic.so
-/home/cirano/Quandyga/dutchbike/workR/install/./exe_DutchBike
